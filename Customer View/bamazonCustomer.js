@@ -47,7 +47,7 @@ function readProducts() {
 
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
-        // Log all results of the SELECT statement
+        
         console.log(`ITEM ID     PRODUCT NAME                           DEPARTMENT NAME     PRICE     STOCK QUANTITY
 -------     ----------------------------------     ---------------     -----     --------------`)
 
