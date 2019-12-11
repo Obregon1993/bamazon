@@ -16,7 +16,7 @@ const connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
 
-    readProducts();
+    managerOptions();
 });
 //-----------------------------------------------------------------
 function updateProduct(idProduct, newAmount) {
@@ -78,24 +78,71 @@ function addToInventary(arrayProduct) {
 }
 //-------------------------------------------------------
 function showProducts(arrayProduct) {
-    console.log(`ITEM ID     PRODUCT NAME                           DEPARTMENT NAME     PRICE     STOCK QUANTITY
--------     ----------------------------------     ---------------     -----     --------------`)
+//     console.log(`ITEM ID     PRODUCT NAME                           DEPARTMENT NAME     PRICE     STOCK QUANTITY
+// -------     ----------------------------------     ---------------     -----     --------------`)
 
 
-    console.log(`${arrayProduct[0].id}           ${arrayProduct[0].product_name}                            ${arrayProduct[0].department_name}         ${arrayProduct[0].price}        ${arrayProduct[0].stock_quantity}`)
-    console.log(`${arrayProduct[1].id}           ${arrayProduct[1].product_name}                                   ${arrayProduct[1].department_name}         ${arrayProduct[1].price}        ${arrayProduct[1].stock_quantity}`)
-    console.log(`${arrayProduct[2].id}           ${arrayProduct[2].product_name}                         ${arrayProduct[2].department_name}      ${arrayProduct[0].price}        ${arrayProduct[2].stock_quantity}`)
-    console.log(`${arrayProduct[3].id}           ${arrayProduct[3].product_name}                            ${arrayProduct[3].department_name}             ${arrayProduct[3].price}        ${arrayProduct[3].stock_quantity}`)
-    console.log(`${arrayProduct[4].id}           ${arrayProduct[4].product_name}                       ${arrayProduct[4].department_name}             ${arrayProduct[4].price}        ${arrayProduct[4].stock_quantity}`)
-    console.log(`${arrayProduct[5].id}           ${arrayProduct[5].product_name}                         ${arrayProduct[5].department_name}         ${arrayProduct[5].price}        ${arrayProduct[5].stock_quantity}`)
-    console.log(`${arrayProduct[6].id}           ${arrayProduct[6].product_name}     ${arrayProduct[6].department_name}               ${arrayProduct[6].price}        ${arrayProduct[6].stock_quantity}`)
-    console.log(`${arrayProduct[7].id}           ${arrayProduct[7].product_name}                     ${arrayProduct[7].department_name}               ${arrayProduct[7].price}        ${arrayProduct[7].stock_quantity}`)
-    console.log(`${arrayProduct[8].id}           ${arrayProduct[8].product_name}                               ${arrayProduct[8].department_name}         ${arrayProduct[8].price}        ${arrayProduct[8].stock_quantity}`)
-    console.log(`${arrayProduct[9].id}          ${arrayProduct[9].product_name}                                ${arrayProduct[9].department_name}         ${arrayProduct[9].price}        ${arrayProduct[9].stock_quantity}`)
-    
+//     console.log(`${arrayProduct[0].id}           ${arrayProduct[0].product_name}                            ${arrayProduct[0].department_name}         ${arrayProduct[0].price}        ${arrayProduct[0].stock_quantity}`)
+//     console.log(`${arrayProduct[1].id}           ${arrayProduct[1].product_name}                                   ${arrayProduct[1].department_name}         ${arrayProduct[1].price}        ${arrayProduct[1].stock_quantity}`)
+//     console.log(`${arrayProduct[2].id}           ${arrayProduct[2].product_name}                         ${arrayProduct[2].department_name}      ${arrayProduct[0].price}        ${arrayProduct[2].stock_quantity}`)
+//     console.log(`${arrayProduct[3].id}           ${arrayProduct[3].product_name}                            ${arrayProduct[3].department_name}             ${arrayProduct[3].price}        ${arrayProduct[3].stock_quantity}`)
+//     console.log(`${arrayProduct[4].id}           ${arrayProduct[4].product_name}                       ${arrayProduct[4].department_name}             ${arrayProduct[4].price}        ${arrayProduct[4].stock_quantity}`)
+//     console.log(`${arrayProduct[5].id}           ${arrayProduct[5].product_name}                         ${arrayProduct[5].department_name}         ${arrayProduct[5].price}        ${arrayProduct[5].stock_quantity}`)
+//     console.log(`${arrayProduct[6].id}           ${arrayProduct[6].product_name}     ${arrayProduct[6].department_name}               ${arrayProduct[6].price}        ${arrayProduct[6].stock_quantity}`)
+//     console.log(`${arrayProduct[7].id}           ${arrayProduct[7].product_name}                     ${arrayProduct[7].department_name}               ${arrayProduct[7].price}        ${arrayProduct[7].stock_quantity}`)
+//     console.log(`${arrayProduct[8].id}           ${arrayProduct[8].product_name}                               ${arrayProduct[8].department_name}         ${arrayProduct[8].price}        ${arrayProduct[8].stock_quantity}`)
+//     console.log(`${arrayProduct[9].id}          ${arrayProduct[9].product_name}                                ${arrayProduct[9].department_name}         ${arrayProduct[9].price}        ${arrayProduct[9].stock_quantity}`)
+    console.table(arrayProduct);
 }
 //-------------------------------------------------------
-function readProducts() {
+function addProduct() {
+    inquirer
+  .prompt([
+    
+    {
+      type: "input",
+      message: "What is the product's name?",
+      name: "name"
+    },
+    {
+        type: "input",
+        message: "What is the department?",
+        name: "department"
+      },
+      {
+        type: "input",
+        message: "What is the cost of each product?",
+        name: "price"
+      },
+      {
+        type: "input",
+        message: "How many products?",
+        name: "quantity"
+      }
+   
+   
+  ])
+  .then(function(inquirerResponse) {
+    console.log("Inserting a new product...\n");
+  const query = connection.query(
+    "INSERT INTO products SET ?",
+    {
+      product_name: inquirerResponse.name,
+      department_name:inquirerResponse.department,
+      price: parseInt(inquirerResponse.price),
+      stock_quantity: parseInt(inquirerResponse.quantity)
+    },
+    function(err, res) {
+      if (err) throw err;
+      console.log("Product added succesfully!");
+      
+      connection.end();
+    }
+  );
+  });
+}
+//-------------------------------------------------------
+function managerOptions() {
 
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
@@ -125,6 +172,9 @@ function readProducts() {
                     lowInventory(res);
                 } else if (inquirerResponse.managerChoices === "Add to Inventory") {
                     addToInventary(res);
+                }else if(inquirerResponse.managerChoices ==="Add New Product"){
+                    addProduct();
+                    
                 }
 
             });

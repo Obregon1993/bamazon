@@ -47,21 +47,21 @@ function readProducts() {
 
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
-        
-        console.log(`ITEM ID     PRODUCT NAME                           DEPARTMENT NAME     PRICE     STOCK QUANTITY
--------     ----------------------------------     ---------------     -----     --------------`)
+        console.table(res);
+//         console.log(`ITEM ID     PRODUCT NAME                           DEPARTMENT NAME     PRICE     STOCK QUANTITY
+// -------     ----------------------------------     ---------------     -----     --------------`)
 
 
-        console.log(`${res[0].id}           ${res[0].product_name}                            ${res[0].department_name}         ${res[0].price}        ${res[0].stock_quantity}`)
-        console.log(`${res[1].id}           ${res[1].product_name}                                   ${res[1].department_name}         ${res[1].price}        ${res[1].stock_quantity}`)
-        console.log(`${res[2].id}           ${res[2].product_name}                         ${res[2].department_name}      ${res[0].price}        ${res[2].stock_quantity}`)
-        console.log(`${res[3].id}           ${res[3].product_name}                            ${res[3].department_name}             ${res[3].price}        ${res[3].stock_quantity}`)
-        console.log(`${res[4].id}           ${res[4].product_name}                       ${res[4].department_name}             ${res[4].price}        ${res[4].stock_quantity}`)
-        console.log(`${res[5].id}           ${res[5].product_name}                         ${res[5].department_name}         ${res[5].price}        ${res[5].stock_quantity}`)
-        console.log(`${res[6].id}           ${res[6].product_name}     ${res[6].department_name}               ${res[6].price}        ${res[6].stock_quantity}`)
-        console.log(`${res[7].id}           ${res[7].product_name}                     ${res[7].department_name}               ${res[7].price}        ${res[7].stock_quantity}`)
-        console.log(`${res[8].id}           ${res[8].product_name}                               ${res[8].department_name}         ${res[8].price}        ${res[8].stock_quantity}`)
-        console.log(`${res[9].id}          ${res[9].product_name}                                ${res[9].department_name}         ${res[9].price}        ${res[9].stock_quantity}`)
+//         console.log(`${res[0].id}           ${res[0].product_name}                            ${res[0].department_name}         ${res[0].price}        ${res[0].stock_quantity}`)
+//         console.log(`${res[1].id}           ${res[1].product_name}                                   ${res[1].department_name}         ${res[1].price}        ${res[1].stock_quantity}`)
+//         console.log(`${res[2].id}           ${res[2].product_name}                         ${res[2].department_name}      ${res[0].price}        ${res[2].stock_quantity}`)
+//         console.log(`${res[3].id}           ${res[3].product_name}                            ${res[3].department_name}             ${res[3].price}        ${res[3].stock_quantity}`)
+//         console.log(`${res[4].id}           ${res[4].product_name}                       ${res[4].department_name}             ${res[4].price}        ${res[4].stock_quantity}`)
+//         console.log(`${res[5].id}           ${res[5].product_name}                         ${res[5].department_name}         ${res[5].price}        ${res[5].stock_quantity}`)
+//         console.log(`${res[6].id}           ${res[6].product_name}     ${res[6].department_name}               ${res[6].price}        ${res[6].stock_quantity}`)
+//         console.log(`${res[7].id}           ${res[7].product_name}                     ${res[7].department_name}               ${res[7].price}        ${res[7].stock_quantity}`)
+//         console.log(`${res[8].id}           ${res[8].product_name}                               ${res[8].department_name}         ${res[8].price}        ${res[8].stock_quantity}`)
+//         console.log(`${res[9].id}          ${res[9].product_name}                                ${res[9].department_name}         ${res[9].price}        ${res[9].stock_quantity}`)
 
         inquirer
             .prompt([
