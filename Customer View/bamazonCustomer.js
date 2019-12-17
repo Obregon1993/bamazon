@@ -33,9 +33,27 @@ function updateProduct(idProduct,newAmount, price, sold) {
      ],
      function(err, res) {
        if (err) throw err;
-       console.log(`Total cost is ${(price*sold*0.07)+(price*sold)}`);
+       var total=price*sold;
+       console.log(`Total cost is ${(total*0.07)+(total)}`);
        
-       connection.end();
+       connection.query(
+        "UPDATE products SET ? WHERE ?",
+        [
+          {
+            product_sales: total
+          },
+          {
+            id:idProduct
+          }
+        ],
+        function(err, res) {
+          if (err) throw err;
+          
+          
+          connection.end();
+        }
+        
+      );
      }
      
    );
